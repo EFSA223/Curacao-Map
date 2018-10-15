@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <title>Curaçao Map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- New Google fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maitree">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courgette">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=latin-ext">    
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.js"></script>
+
+  <style>
+    /*	CSS rules written here */
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      font-family: "Noto+Sans", sans-serif; 
+      color: #3d3d3d;
+      font-size: 100%;
+    }
+
+    section {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-family: "Courgette", serif; 
+      letter-spacing: .04em;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      font-family: "Courgette", serif;  
+      letter-spacing: .04em;
+    }
+      
+    h3 {
+      font-size: 1.2em;
+      font-family: "Courgette", serif;  
+      letter-spacing: .02em;
+    }
+
+    p {
+      font-size: 1em;
+      line-height: 1.5em;
+    }
+
+    a {
+      color: #005daa;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 640px;
+      margin: 10px auto;
+      border: 2px solid #d3d3d3;
+    }
+
+    .clear {
+      clear: both;
+    }
+    hr {
+      width: 80%;
+      margin: 0 auto;
+    }
+      
+    .column {
+      float: left;
+      width: 46%;
+      margin-right: 4%;
+     }
+    
+    .column-right {
+      margin-right: 0;
+     } 
+      
+  </style>
+
+</head>
+
+<body>
+    <section>
+      <h1>My Awesome Map!</h1>
+    </section>
+
+    <section>
+      <div id='map'></div>
+    </section>
+
+    <section>
+      <h2>About this map</h2>
+        <p>
+          Curaçao is one of the most beautiful islands in the southern Caribbean, just before the Venezuelan coast. Curaçao is an autonomous
+          country within the Kingdom of the Netherlands and forms together with its neighbors, Aruba and Bonaire. The so-called <strong>'ABC' islands</strong> or <strong>Leeward Antilles</strong>.</p>
+    </section>
+    <section>
+    <div class="column">
+  
+        <h3>Curaçao</h3>
+            <ul>
+                <li>With its location in the tropics, 12° to the north
+                    of the equator, Curaçao has a warm, sunny climate all year round. The average temperature is about 27 °C. There is a constant, cooling wind from the east, especially in spring. Willemstad is the capital city.</li>
+                <li>The island is 60km long and cover a area of 444km², It has an estimated population of 150.000 inhabitants.</li>
+                <li>Here you will find additional information about
+                    <a href="https://wikitravel.org/en/Cura%C3%A7ao">the island</a>, and more
+                    <a href="https://www.curacao.com/en/"> tourist </a>information.</li>
+            </ul>
+       <!-- </ul> -->     
+    </div> <!-- end column div -->
+   <!-- <hr>-->
+    <div class="column column-right">
+    <h3>More about me:</h3>
+      <ul>
+        <li>See my projects on GitHub:
+          <a href="https://github.com/newmapsplus/map671-module-01-EFSA223">EF-Sambo</a>
+        </li>
+        <li>Follow me on twitter:
+          <a href="https://twitter.com/etiennesambo">@etiennesambo</a>
+        </li>
+        <li>Visit my
+          <a href='#'>mapping portfolio</a>.</li>
+      </ul>
+    </div> <!-- end column div -->
+    </section>
+
+    <script>
+      var options = {
+        center: [12.1979, -68.9987],
+        zoom: 11
+      }
+
+      var map = L.map('map', options);
+
+      var clickme_id = document.getElementById('body_id');
+
+      // My basemap!  
+      var Hydda_Full = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap </a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+   
+    // STORING DATA AS VARIABLES IN ARRAY
+    var nameLocation        = ["Oostpunt","Westpunt","Willemstad","Tafelberg","Airport","Christoffelpark",
+                               "Cas Abao"];
+    var detailsLocation     = ["Derde district","Tweede district","Eerste district",
+                               "Tweede district","Tweede district","Derde district","Derde district"];
+    var coordinateLocation  = [
+                              [12.0499, -68.7537],
+                              [12.3866, -69.1543],
+                              [12.1062, -68.9342],
+                              [12.0681, -68.8342],
+                              [12.1891, -68.9623],
+                              [12.3294, -69.1261],
+                              [12.2288, -69.0922],
+                                                ];
+     var touristLoc    = [false,true,true,false,true,true,true];
+     var locImage      = ["<img src=\"graphics/Oostpunt.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Watamula-hole.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Handelskade-01.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Tafelberg.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Curacao-Airport.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Christoffelpark.jpg\" height=\"200\" width=\"200\" <br><br>",
+                          "<img src=\"graphics/Playa Cas Abao.jpg\" height=\"200\" width=\"200\" <br><br>"];
+
+    for (var i = 0; i < nameLocation.length; i++) {
+            var locatie     = nameLocation[i];
+            var details     = detailsLocation[i];
+            var coords      = coordinateLocation[i];
+            var image       = locImage[i]; 
+      if (touristLoc[i]) {
+        locationTooltip = locatie + "<br>"+ details + "<br>" + image + "<b>Tourist attractions</b>"; 
+      }  else {
+        locationTooltip = locatie + "<br>"+ details + "<br>" + image + "<b>Private property</b>"; 
+      }
+        
+      L.marker(coords)
+        .addTo(map)                  // add it to the map
+      .bindTooltip(locationTooltip); // bind the tooltip       
+    }
+    </script>
+</body>
+
+</html>
